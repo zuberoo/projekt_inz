@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+	<html lang="pl">
+	<head>
+		<meta charset="UTF-8">
+		<title>Ankiety</title>
+		<meta charset="UTF-8">
+		<link rel='stylesheet' href="../CSS/style.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<script type="text/javascript" src="../JS/login.js"></script>
+	</head>
+	<body>
+		
+<div class="form">
+      
+      <ul class="tab-group">
+        <li class="tab active"><a href="#login">Zaloguj</a></li>
+        <li class="tab "><a href="#signup">Zarejestruj się</a></li>
+      </ul>
+      
+      <div class="tab-content">
+        
+        
+        <div id="login">   
+          <h1>Witaj w systemie ankietowym</h1>
+          
+          <form action="login.php" method="post">
+          
+            <div class="field-wrap">
+            <label>
+              Adres email<span class="req">*</span>
+            </label>
+            <input type="email"required autocomplete="off"/>
+          </div>
+          
+          <div class="field-wrap">
+            <label>
+              Hasło<span class="req">*</span>
+            </label>
+            <input type="password"required autocomplete="off"/>
+          </div>
+          
+          <p class="forgot"><a href="#">Zapomniałeś hasła?</a></p>
+          
+          <button class="button button-block"/>Zaloguj
+
+      </button>
+          
+          </form>
+
+        </div>
+        <div id="signup">   
+          <h1>Zarejestruj się do systemu Ankietowego</h1>
+          
+          <form action="../PHP/signup.php" method="post">
+
+          <div class="field-wrap">
+            <label>
+              Adres email<span class="req">*</span>
+            </label>
+            <input name = "email" type="email"required autocomplete="off"/>
+          </div>
+          
+          <div class="field-wrap">
+            <label>
+              Hasło<span class="req">*</span>
+            </label>
+            <input name="pass" type="password"required autocomplete="off"/>
+          </div>
+          
+          <button type="submit" class="button button-block"/>Zarejestruj</button>
+          
+          </form>
+
+        </div>
+      </div><!-- tab-content -->
+      
+</div> <!-- /form -->
+	</body>
+</html>
