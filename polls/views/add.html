@@ -1,0 +1,194 @@
+<div class="row">
+    <div class="col-md-2 left-menu">
+        <div ng-include="config.route + '/core/modules/app/views/mainmenu.html'"></div>
+    </div>
+    <div class="col-md-10 mainboard">
+        <div class="panel panel-default" ng-if="currentUser.acl.polls_add">
+            <div class="panel-heading">
+                <ol class="breadcrumb">
+                    <li><a ng-href="{{config.route}}/polls/list">{{'Ankiety' | translate }}</a></li>
+                    <li class="active">{{'Dodaj' | translate }}</li>
+                    <div class="pull-right">
+                        <nav>
+                            <ul class="nav nav-user">
+                                <li ng-if="currentUser.id" class="mainmenu">
+                                    <a ng-href="{{config.route}}/account">{{currentUser.name}} {{currentUser.surname}}</a>
+                                </li>
+                                <li ng-if="currentUser.id" class="mainmenu">
+                                    <a ng-click="logout()"><span class="glyphicon glyphicon-log-out"></span></a>
+                                </li>
+                                <li ng-if="!currentUser.id" class="mainmenu">
+                                    <a ng-href="{{config.route}}/login"><span class="glyphicon glyphicon-log-in"></span></a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div> 
+                </ol>
+            </div>
+            <div ng-if="pickGroupOn" class="modal-box-small on-top" id="pickGroupOn">
+                <div class="modal-box-header">
+                    {{ 'Wybierz grupe docelową' | translate }}
+                    <a ng-click="hideBox('pickGroupOn')" class="pull-right"><span class="glyphicon glyphicon-remove"></span></a>
+                </div>
+                <div class="modal-box-content">
+                    <div class="input-group">
+                        <input type="searchGroup" name="searchGroup" id="searchGroup" class="form-control" ng-model="searchGroup.text" />
+                        <a class="input-group-addon" ng-click="searchGroup.search()">
+                            <span class="glyphicon glyphicon-search"></span>
+                        </a>
+                    </div>
+                    <div class="list-group" ng-repeat="group in groupList track by $index">
+                        <a class="list-group-item" ng-click="pickGroup(group)">{{group.name}}</a>
+                    </div>
+                </div>
+            </div>
+            <div ng-if="editQuestionOn" class="modal-box-small on-top" id="editQuestionOn">
+                <div class="modal-box-header">
+                    {{ 'Edytuj pytanie' | translate }}
+                    <a ng-click="hideBox('editQuestionOn')" class="pull-right"><span class="glyphicon glyphicon-remove"></span></a>
+                </div>
+                <div class="modal-box-content">
+                    <form name="form" ng-submit="editQuestion()" role="form">
+                    <div class="input-group">
+                            <label for="name">{{ 'Pytanie' | translate }}</label>
+                            <input type="text" name="name" id="name" class="form-control" ng-model="tempEditQuestion.name"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="type">{{ 'Typ' | translate }}</label>
+                        <span>{{ 'Otwarte' | translate }}</span>
+                        <input type="radio" name="type" value="open" ng-model="tempEditQuestion.type" ng-click="changed()"/>
+                        <span>{{ 'Zamkniete' | translate }}</span>
+                        <input type="radio" name="type" value="close" ng-model="tempEditQuestion.type" ng-click="changed()"/>
+                        <span>{{ 'Skala' | translate }}</span>
+                        <input type="radio" name="type" value="scale" ng-model="tempEditQuestion.type" ng-click="changed()"/>
+                    </div>
+                    <div class="form-group" ng-if="tempEditQuestion.type == 'open'">
+                        <label for="new">{{ 'Długość odpowiedzi' | translate }}</label>
+                        <input type="number" name="open" class="form-control" ng-model="tempEditQuestion.answers[0].val"/>
+                    </div>
+                    <div class="form-group" ng-if="tempEditQuestion.type == 'close'" ng-repeat="answer in tempEditQuestion.answers track by $index">
+                        <label>{{ 'Opowiedź ' | translate}}{{$index+1}}</label>
+                        <input type="text" name="newanswer_{{$index}}" ng-model="answer.val">
+                    </div>
+                    <div class="form-group" ng-if="tempEditQuestion.type == 'scale'">
+                        <label>{{ 'Długośc skali ' | translate}}</label>
+                        <input type="range" min="3" max="9" step="2" value="7" list="tickmarks" ng-model="tempEditQuestion.answers[0].val">
+                        <datalist id="tickmarks">
+                        <option value="3" label="3">3</option>
+                        <option value="5" label="5">5</option>
+                        <option value="7" label="7">7</option>
+                        <option value="9" label="9">9</option>
+                        </datalist>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-actionpiapp"><span class="glyphicon glyphicon-floppy-disk"></span> {{ 'Edytuj pytanie' | translate }}</button>
+                        <img ng-if="dataLoading" ng-src="{{ config.route }}/core/modules/app/images/loading.gif" />
+                    </div> 
+                </form>
+            </div>
+        </div>
+            <div ng-if="addQuestionOn" class="modal-box-small on-top" id="addQuestionOn">
+                <div class="modal-box-header">
+                    {{ 'Dodaj pytanie' | translate }}
+                    <a ng-click="hideBox('addQuestionOn')" class="pull-right"><span class="glyphicon glyphicon-remove"></span></a>
+                </div>
+                <div class="modal-box-content">
+                    <form name="form" ng-submit="addNewQuestion()" role="form">
+                    <div class="input-group">
+                            <label for="name">{{ 'Pytanie' | translate }}</label>
+                            <input type="text" name="name" id="name" class="form-control" ng-model="newQuestion.name"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="type">{{ 'Typ' | translate }}</label>
+                        <span>{{ 'Otwarte' | translate }}</span>
+                        <input type="radio" name="type" value="open" ng-model="newQuestion.type" ng-click="changed()"/>
+                        <span>{{ 'Zamkniete' | translate }}</span>
+                        <input type="radio" name="type" value="close" ng-model="newQuestion.type" ng-click="changed()"/>
+                        <span>{{ 'Skala' | translate }}</span>
+                        <input type="radio" name="type" value="scale" ng-model="newQuestion.type" ng-click="changed()"/>
+                    </div>
+                    <div class="form-group" ng-if="newQuestion.type == 'open'">
+                        <label for="new">{{ 'Długość odpowiedzi' | translate }}</label>
+                        <input type="number" name="open" class="form-control" ng-model="newQuestion.answers[0].val"/>
+                    </div>
+                    <div class="form-group" ng-if="newQuestion.type == 'close'" ng-repeat="answer in newQuestion.answers track by $index">
+                        <label>{{ 'Opowiedź ' | translate}}{{$index+1}}</label>
+                        <input type="text" name="newanswer_{{$index}}" ng-model="answer.val">
+                    </div>
+                    <div class="form-group" ng-if="newQuestion.type == 'scale'">
+                        <label>{{ 'Długośc skali ' | translate}}</label>
+                        <input type="range" min="3" max="9" step="2" list="tickmarks" ng-model="newQuestion.answers[0].val">
+                        <datalist id="tickmarks">
+                        <option value="3" label="3">3</option>
+                        <option value="5" label="5">5</option>
+                        <option value="7" label="7">7</option>
+                        <option value="9" label="9">9</option>
+                        </datalist>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-actionpiapp"><span class="glyphicon glyphicon-floppy-disk"></span> {{ 'Dodaj pytanie' | translate }}</button>
+                        <img ng-if="dataLoading" ng-src="{{ config.route }}/core/modules/app/images/loading.gif" />
+                    </div></form>       
+                </div>
+            </div>
+            <div class="panel-body">
+                <form name="form" ng-submit="addNewPoll()" role="form">
+                    <div class="form-group">
+                          <a class="btn btn-default" ng-click="showBox('pickGroupOn')">
+                            <span class="glyphicon glyphicon-user"></span>
+                            <span class="glyphicon glyphicon-search"></span>
+                            {{ 'Wyszukaj grupe docelową' | translate }}
+                        </a>
+                    <div class="form-group" ng-if="pollsAdd.destGroups.id">
+                        <span>{{ 'Grupa Docelowa' | translate }}: </span>
+                        <span>{{pollsAdd.destGroups.name}} </span>                           
+                    </div>
+                    <div class="form-group">
+                        <label for="name">{{ 'Nazwa ankiety' | translate }}</label>
+                        <input type="text" name="name" id="name" class="form-control" ng-model="pollsAdd.name"/>
+                    </div>        
+                    <a class="btn btn-default" ng-click="showBox('addQuestionOn')"> 
+                        <span class="glyphicon glyphicon-user"></span>  
+                        {{ 'Dodaj pytanie' | translate }}
+                    </a>
+                    <div class="col-md-12">
+                        <h3>{{'Lista pytań' | translate}}</h3>
+                        <span ng-if="!pollsAdd.questions || !pollsAdd.questions[0]">{{'Brak pytań' | translate}}</span>
+                        <table class="table table-striped" ng-if="pollsAdd.questions && pollsAdd.questions[0]">
+                            <thead>
+                                <tr>
+                                    <th>{{"Lp." | translate}}</th>
+                                    <th>{{'Nazwa' | translate}}</th>
+                                    <th>{{'Typ' | translate}}</th>
+                                    <th>{{'Edytuj' | translate}}</th>
+                                    <th>{{'Usuń' | translate}}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="question in pollsAdd.questions track by $index">
+                                    <td>{{$index +1}}.</td>
+                                    <td>{{question.name}}</td>
+                                    <td>{{question.type}}</td>
+                                    <td>
+                                        <a class="btn btn-default" ng-click="tempQuestion($index,'editQuestionOn')"><span class="glyphicon glyphicon-print"></span></a>
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-danger" ng-click="questionDelete($index)"><span class="glyphicon glyphicon-trash"></span></a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-actionpiapp"><span class="glyphicon glyphicon-floppy-disk"></span> {{ 'Dodaj Ankiete' | translate }}</button>
+                        <img ng-if="dataLoading" ng-src="{{ config.route }}/core/modules/app/images/loading.gif" />
+                    </div>  
+                </div>
+            </form>
+                <div ng-show="addPollMessage.error" class="alert alert-danger">{{addPollMessage.error | translate}}</div>
+                <div ng-show="addPollMessage.success" class="alert alert-success">{{addPollMessage.success | translate}}</div>
+            </div>
+        </div>
+    </div>
+    <div ng-include="config.route + '/core/modules/app/views/footer.html'"></div>
+</div>
