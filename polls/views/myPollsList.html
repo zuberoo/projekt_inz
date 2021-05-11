@@ -1,0 +1,37 @@
+<div class="row">
+	<div class="col-md-2 left-menu">
+		<div ng-include="config.route + '/core/modules/app/views/mainmenu.html'"></div>
+	</div>
+	<div class="col-md-10 mainboard">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				{{'Moja lista ankiet' | translate }}
+				<div class="pull-right">
+                    <nav>
+                        <ul class="nav nav-user">
+                            <li ng-if="currentUser.id" class="mainmenu">
+                                <a ng-href="{{config.route}}/account">{{currentUser.name}} {{currentUser.surname}}</a>
+                            </li>
+                            <li ng-if="currentUser.id" class="mainmenu">
+                                <a ng-click="logout()"><span class="glyphicon glyphicon-log-out"></span></a>
+                            </li>
+                            <li ng-if="!currentUser.id" class="mainmenu">
+                                <a ng-href="{{config.route}}/login"><span class="glyphicon glyphicon-log-in"></span></a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div> 
+			</div>
+			<div class="panel-body">
+				<div class="col-md-12">
+					<a class="btn btn-default" ng-href="{{config.route}}/polls/add">
+						<span class="glyphicon glyphicon-plus"></span>{{'Dodaj swoją ankiete' | translate }}
+					</a>
+					<!-- <print type="ordersalllist"></print> -->
+				</div>
+				<div ng-tab="" sort="name" sortbyorder="true" tab="myPollsList" cols="myPollsListCols" limit="20" callback-link="polls/fill"></div>				
+			</div>
+		</div>
+	</div>
+	<div ng-include="config.route + '/core/modules/app/views/footer.html'"></div>
+</div>

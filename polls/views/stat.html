@@ -1,0 +1,142 @@
+<div class="row">
+    <div class="col-md-2 left-menu">
+        <div ng-include="config.route + '/core/modules/app/views/mainmenu.html'"></div>
+    </div>
+    <div class="col-md-10 mainboard">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <ol class="breadcrumb">
+                    <li><a ng-href="{{config.route}}/polls/myCreatedList">{{'Moja ankieta' | translate }}</a></li>
+                    <li class="active">{{pollShow.name}}</li>
+                    <div class="pull-right">
+                        <nav>
+                            <ul class="nav nav-user">
+                                <li ng-if="currentUser.id" class="mainmenu">
+                                    <a ng-href="{{config.route}}/account">{{currentUser.name}} {{currentUser.surname}}</a>
+                                </li>
+                                <li ng-if="currentUser.id" class="mainmenu">
+                                    <a ng-click="logout()"><span class="glyphicon glyphicon-log-out"></span></a>
+                                </li>
+                                <li ng-if="!currentUser.id" class="mainmenu">
+                                    <a ng-href="{{config.route}}/login"><span class="glyphicon glyphicon-log-in"></span></a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div> 
+                </ol>                        
+            </div>
+            <div class="panel-body">
+                <div class="col-md-12">
+                    <ul class="nav nav-tabs">
+                        <li role="presentation" ng-class="{active:pollsTabOn=='start'}">
+                            <a ng-click="pollsTab('start')">
+                                <span class="glyphicon glyphicon-list-alt"></span> {{'Informacje' | translate }}
+                            </a>
+                        </li>
+                        <li role="presentation" ng-class="{active:pollsTabOn=='users'}" ng-if="currentUser.acl.raports_edit">
+                            <a ng-click="pollsTab('users')">
+                                <span class="glyphicon glyphicon-pencil"></span> {{'Użytkownicy' | translate }}
+                            </a>
+                        </li>
+                        <li role="presentation" ng-class="{active:pollsTabOn=='stat'}" ng-if="currentUser.acl.raports_delete">
+                            <a ng-click="pollsTab('stat')">
+                                <span class="glyphicon glyphicon-trash"></span> {{ 'Statystyka' | translate }}
+                            </a>
+                        </li>
+                    </ul>
+
+                </div>
+                <div class="col-md-12" ng-if="pollsTabOn=='start'">
+                    <table class="table table-striped">
+                        <tbody>
+                            <tr>
+                                <td>{{ 'Nazwa' | translate }}</td>
+                                <td>{{pollShow.name}}</td>
+                            </tr>
+                            <tr>
+                                <td>{{ 'Data rozpoczęcia' | translate }}</td>
+                                <td>{{pollShow.dateadd | date: 'dd-MM-yyyy'}}</td>
+                            </tr>
+                            <tr>
+                                <td>{{ 'Data zakończenia' | translate }}</td>
+                                <td>{{pollShow.dateend | date: 'dd-MM-yyyy'}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <h3>{{ 'Pytania' | translate }}</h3>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>{{ 'LP.' | translate }}</th>
+                                <th>{{ 'Pytanie' | translate }}</th>
+                                <th>{{ 'Typ' | translate }}</th>
+                                <th>{{ 'Odpowiedzi' | translate }}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="question in pollShow.questions track by $index">
+                                <td>{{$index +1}}.</td>
+                                <td>{{question.name}}</td>
+                                <td>{{question.type}}</td>
+                                <td><p ng-repeat="answer in question.answers track by $index">{{$index+1}} : {{answer.val}}</p></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-md-12" ng-if="pollsTabOn=='users'">
+                    <h3>{{ 'Użytkownicy' | translate }}</h3>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>{{ 'LP.' | translate }}</th>
+                                <th>{{ 'Imię' | translate }}</th>
+                                <th>{{ 'Nazwisko' | translate }}</th>
+                                <th>{{ 'Mail' | translate }}</th>
+                                <th>{{ 'Status' | translate }}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="user in pollShow.users track by $index">
+                                <td>{{$index +1}}.</td>
+                                <td>{{user.name}}</td>
+                                <td>{{user.surname}}</td>
+                                <td>{{user.mail}}</td>
+                                <td ng-if="user.status==1">{{ 'Nie udzielono' | translate }}</td>
+                                <td ng-if="user.status==2">{{ 'Udzielono' | translate }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-md-12" ng-if="pollsTabOn=='stat'">
+                    <h3>{{ 'Statystyka' | translate }}</h3>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>{{ 'LP.' | translate }}</th>
+                                <th>{{ 'Pytanie' | translate }}</th>
+                                <th>{{ 'Typ' | translate }}</th>
+                                <th>{{ 'Odpowiedzi' | translate }}</th>
+                                <th>{{ 'Ilość odpowiedzianych/Nr na skali' | translate }}</th>
+                                <th>{{ 'Procent' | translate }}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="question in stats.questions track by $index">
+                                <td>{{$index +1}}.</td>
+                                <td>{{question.name}}</td>
+                                <td>{{question.type}}</td>
+                                <td><p ng-repeat="answer in question.answers track by $index">{{$index+1}} : {{answer.val}}</p></td>
+                                <td ng-if="question.type=='close'"><p ng-repeat="answer in question.answers track by $index"><span ng-if="answer.vote">{{answer.vote}}</span><span ng-if="!answer.vote">0</span></p></td>
+                                <td ng-if="question.type=='close'"><p ng-repeat="answer in question.answers track by $index"><span ng-if="answer.vote">{{answer.procentage}}%</span><span ng-if="!answer.vote">0%</span></p></td>
+                                <td ng-if="question.type=='open'"><span ng-repeat="answer in question.answers track by $index"><p ng-repeat="vote in answer.vote track by $index">{{vote}}</p></span></td>
+                                <td ng-if="question.type=='scale'"><span ng-repeat="answer in question.answers track by $index"><p ng-repeat="vote in answer.vote track by $index"> {{vote.number}} : {{vote.val}}/{{answer.val}}</p></span></td>
+                                <td ng-if="question.type=='scale'"><span ng-repeat="answer in question.answers track by $index"><p ng-repeat="vote in answer.vote track by $index">{{vote.procentage}}%</p></span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div ng-include="config.route + '/core/modules/app/views/footer.html'"></div>
+</div>

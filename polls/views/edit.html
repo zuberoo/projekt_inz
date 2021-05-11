@@ -1,0 +1,211 @@
+<div class="row">
+    <div class="col-md-2 left-menu">
+        <div ng-include="config.route + '/core/modules/app/views/mainmenu.html'"></div>
+    </div>
+    <div class="col-md-10 mainboard">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <ol class="breadcrumb">
+                    <li><a ng-href="{{config.route}}/polls/myCreatedList">{{'Moja ankieta' | translate }}</a></li>
+                    <li class="active">{{pollShow.name}}</li>
+                    <div class="pull-right">
+                        <nav>
+                            <ul class="nav nav-user">
+                                <li ng-if="currentUser.id" class="mainmenu">
+                                    <a ng-href="{{config.route}}/account">{{currentUser.name}} {{currentUser.surname}}</a>
+                                </li>
+                                <li ng-if="currentUser.id" class="mainmenu">
+                                    <a ng-click="logout()"><span class="glyphicon glyphicon-log-out"></span></a>
+                                </li>
+                                <li ng-if="!currentUser.id" class="mainmenu">
+                                    <a ng-href="{{config.route}}/login"><span class="glyphicon glyphicon-log-in"></span></a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div> 
+                </ol>                        
+            </div>
+            <div class="panel-body">
+                <div class="col-md-12">
+                    <ul class="nav nav-tabs">
+                        <li role="presentation" ng-class="{active:pollsTabOn=='start'}">
+                            <a ng-click="pollsTab('start')">
+                                <span class="glyphicon glyphicon-list-alt"></span> {{'Informacje' | translate }}
+                            </a>
+                        </li>
+                        <li role="presentation" ng-class="{active:pollsTabOn=='users'}" ng-if="currentUser.acl.raports_edit">
+                            <a ng-click="pollsTab('users')">
+                                <span class="glyphicon glyphicon-pencil"></span> {{'Użytkownicy' | translate }}
+                            </a>
+                        </li>
+                        <li role="presentation" ng-class="{active:pollsTabOn=='stat'}" ng-if="currentUser.acl.raports_delete">
+                            <a ng-click="pollsTab('stat')">
+                                <span class="glyphicon glyphicon-trash"></span> {{ 'Statystyka' | translate }}
+                            </a>
+                        </li>
+                    </ul>
+
+                </div>
+                <div class="col-md-12" ng-if="raportTabOn=='start'">
+                    <p>
+                        <a target="_blank" ng-href="{{config.route}}/core/services/print/printdw.php?id={{raportEdit.id}}" class="btn btn-actiondefault"><span class="glyphicon glyphicon-print"></span> {{ 'Drukuj' | translate }}</a>
+                    </p>
+                    <table class="table table-striped">
+                        <tbody>
+                            <tr>
+                                <td>{{ 'Numer' | translate }}</td>
+                                <td>{{raportEdit.nr}}</td>
+                            </tr>
+                            <tr>
+                                <td>{{ 'Data wytworzenia' | translate }}</td>
+                                <td>{{raportEdit.dateadd | date: 'dd-MM-yyyy'}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <h3>{{ 'Towary' | translate }}</h3>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>{{ 'LP.' | translate }}</th>
+                                <th>{{ 'Nazwa towaru' | translate }}</th>
+                                <th class="tb-number">{{ 'Cena jednostkowa' | translate }}</th>
+                                <th class="tb-number">{{ 'Ilość' | translate }}</th>
+                                <th>{{ 'Jednostka' | translate }}</th>
+                                <th class="tb-number">{{ 'Wartość' | translate }}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="product in raportEdit.products track by $index">
+                                <td>{{$index +1}}.</td>
+                                <td>{{product.name}}</td>
+                                <td class="tb-number">{{product.price | currency :""}} zł</td>
+                                <td class="tb-number">{{product.amount}}</td>
+                                <td>{{product.box}}</td>
+                                <td class="tb-number">{{product.value | currency :""}} zł</td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th>{{ 'RAZEM:' | translate }}</th>
+                                <th class="tb-number">{{raportEdit.sum | currency :""}} zł</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+
+                </div>
+                <div class="col-md-12" ng-if="raportTabOn=='edit'">
+                    <form name="form" ng-submit="editRaport()" role="form" >
+                        <div class="form-group">
+                            <label for="nr">{{ 'Numer' | translate }}</label>
+                            <input type="text" name="nr" id="nr" class="form-control" ng-model="tempEdit.nr"/>
+                        </div>
+                        <div class="form-group">
+                            <label>{{ 'Data' | translate }}</label>
+                            <p>{{tempEdit.dateadd | date: 'dd-MM-yyyy'}} <ng-calendar inp="tempEdit.dateadd"></ng-calendar></p>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" ng-disabled="dataLoading" class="btn btn-actiondefault"><span class="glyphicon glyphicon-floppy-disk"></span> {{ 'Zmień nazwę i datę' | translate }}</button>
+                            <img ng-if="dataLoading" ng-src="{{ config.route }}/core/modules/app/images/loading.gif" />
+                        </div>
+                    </form>
+                    <div class="col-md-12" >
+                        <div ng-show="editRaportMessage.error" class="alert alert-danger">{{editRaportMessage.error | translate}}</div>
+                        <div ng-show="editRaportMessage.success" class="alert alert-success">{{editRaportMessage.success | translate}}</div>
+                    </div>
+                    <h3>{{ 'Lista towarów' | translate }}</h3>
+                    <div class="col-md-12" >
+                        <ng-addfile addaction="importExcel(id)" ></ng-addfile>
+                    </div>
+                    <div class="col-md-12">
+                        <div ng-show="importProductMessage.error" class="alert alert-danger">{{importProductMessage.error | translate}}</div>
+                        <div ng-show="importProductMessage.success" class="alert alert-success">{{importProductMessage.success | translate}}
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <a ng-class="{btn:1, 'btn-default':1, 'btn-success':priceType=='amount'}" ng-click="toggleTypeCo('amount')" ><span class="glyphicon glyphicon-scale"></span> Cena i Ilości</a>
+                        <a ng-class="{btn:1, 'btn-default':1, 'btn-success':priceType=='value'}" ng-click="toggleTypeCo('value')"><span class="glyphicon glyphicon-scale"></span> Cena i Wartość</a>
+                        <a ng-class="{btn:1, 'btn-default':1, 'btn-success':priceType=='price'}" ng-click="toggleTypeCo('price')"><span class="glyphicon glyphicon-scale"></span> Ilości i Wartość</a>
+                    </div>
+                    <form name="form" ng-submit="editRaportProducts()" role="form" >
+                        <div class="form-group">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th class="se-lp">{{ 'Lp.' | translate }}</th>
+                                        <th>{{ 'Nazwa' | translate }}</th>
+                                        <th>{{ 'Cena' | translate }}</th>
+                                        <th>{{ 'Ilość' | translate }}</th>
+                                        <th>{{ 'Wartość' | translate }}</th>
+                                        <th>{{ 'Usuń' | translate }}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="product in tempEdit.products track by $index">
+                                        <td>{{$index +1}}.</td>
+                                        <td ng-if="product.name!=''">{{product.name}}</td>
+                                        <td ng-if="product.name==''">
+                                            <select name="product" class="form-control"
+                                                ng-options="nproduct.name for nproduct in productsList track by nproduct.id"
+                                                ng-model="tempEdit.products[$index]">
+                                            </select>
+                                        </td>
+                                        <td ng-if="priceType=='value'||priceType=='amount'">
+                                            <input type="number" class="form-control" ng-model="product.price" step="0.01" name="price">
+                                        </td>
+                                        <td ng-if="priceType=='price'">
+                                            {{product.value/product.amount | currency :""}}
+                                        </td>
+                                        <td ng-if="priceType=='amount'||priceType=='price'">
+                                            <div class="input-group">
+                                                <input type="number" class="form-control" ng-model="product.amount" name="amount" step="0.01">
+                                                <div class="input-group-addon">{{product.box}}</div>
+                                            </div>
+                                        </td>
+                                        <td ng-if="priceType=='value'">
+                                            {{product.value/product.price | currency :""}} {{product.box}}
+                                        </td>   
+                                        <td ng-if="priceType=='amount'" class="tb-number">
+                                            {{product.amount*product.price | currency :""}}
+                                        </td>
+                                        <td ng-if="priceType=='value'||priceType=='price'" class="tb-number">
+                                            <input type="number" class="form-control" ng-model="product.value" name="value" step="0.01">
+                                        </td>
+                                        <td>
+                                            <a class="btn btn-danger" ng-click="raportEditdeleteProduct($index)"><span class="glyphicon glyphicon-trash"></span></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" ng-disabled="dataLoading" class="btn btn-actiondefault"><span class="glyphicon glyphicon-floppy-disk"></span> {{ 'Zapisz listę towarów' | translate }}</button>
+                            <img ng-if="dataLoading" ng-src="{{ config.route }}/core/modules/app/images/loading.gif" />
+                        </div>
+                    </form>
+                    <div ng-show="editRaportProductsMessage.error" class="alert alert-danger">{{editRaportProductsMessage.error | translate}}</div>
+                    <div ng-show="editRaportProductsMessage.success" class="alert alert-success">{{editRaportProductsMessage.success | translate}}
+                    </div>
+                </div>
+                <div class="col-md-12" ng-if="raportTabOn=='delete'">
+                    <div class="form-group">
+                        <button ng-click="remRaportConf()" class="btn btn-actiondefault"><span class="glyphicon glyphicon-trash"></span> {{ 'Usuń' | translate }}</button>
+                        <img ng-if="dataLoading" ng-src="{{ config.route }}/core/modules/app/images/loading.gif" />
+                    </div>
+                    <div ng-if="remRaportConfirmation">
+                        <p>{{ 'Potwierdź usunięcie'  | translate}}?</p>
+                        <button ng-click="remRaport()" class="btn btn-actiondefault"><span class="glyphicon glyphicon-ok"></span> {{ 'Usuń' | translate }}</button>
+                        <button ng-click="remRaportConf()" class="btn btn-default"><span class="glyphicon glyphicon-remove"></span> {{ 'Anuluj' | translate }}</button>
+                    </div>
+                    <div ng-show="remRaportMessage.error" class="alert alert-danger">{{remRaportMessage.error | translate}}</div>
+                    <div ng-show="remRaportMessage.success" class="alert alert-success">{{remRaportMessage.success | translate}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div ng-include="config.route + '/core/modules/app/views/footer.html'"></div>
+</div>

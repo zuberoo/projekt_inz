@@ -1,0 +1,80 @@
+<div class="row">
+    <div class="col-md-2 left-menu">
+        <div ng-include="config.route + '/core/modules/app/views/mainmenu.html'"></div>
+    </div>
+    <div class="col-md-10 mainboard">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <ol class="breadcrumb">
+                    <li><a ng-href="{{config.route}}/polls/myCreatedList">{{'Moja ankieta' | translate }}</a></li>
+                    <li class="active">{{pollShow.name}}</li>
+                    <div class="pull-right">
+                        <nav>
+                            <ul class="nav nav-user">
+                                <li ng-if="currentUser.id" class="mainmenu">
+                                    <a ng-href="{{config.route}}/account">{{currentUser.name}} {{currentUser.surname}}</a>
+                                </li>
+                                <li ng-if="currentUser.id" class="mainmenu">
+                                    <a ng-click="logout()"><span class="glyphicon glyphicon-log-out"></span></a>
+                                </li>
+                                <li ng-if="!currentUser.id" class="mainmenu">
+                                    <a ng-href="{{config.route}}/login"><span class="glyphicon glyphicon-log-in"></span></a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div> 
+                </ol>                        
+            </div>
+            <div class="panel-body">
+                <div class="col-md-12">
+                    <ul class="nav nav-tabs">
+                        <li role="presentation" ng-class="{active:pollsTabOn=='start'}">
+                            <a ng-click="pollsTab('start')">
+                                <span class="glyphicon glyphicon-list-alt"></span> {{'Ankieta' | translate }}
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                 <div ng-if="giveHashCode" class="modal-box-small on-top" id="giveHashCode">
+                <div class="modal-box-header">
+                    {{ 'Twój hash code' | translate }}
+                </div>
+                <div class="modal-box-content">
+                    <h3>{{'Twój klucz do odpowiedzi! Zapisz go koniecznie!' | translate}}</h3>
+                    <p>{{personalHashCode}}</p>
+                    <button ng-click="reload()" class="btn btn-actionpiapp"><span class="glyphicon glyphicon-floppy-disk"></span> {{ 'Potwierdzam!!!' | translate }}</button>
+                </div>
+            </div>
+                <div class="col-md-12" ng-if="pollsTabOn=='start'">
+                   <form name="form" ng-submit="addAnswer(answerz)" role="form" >
+                        <h3>{{pollShow.name}}</h3>
+                        <div class="form-group" ng-repeat="(i,question) in pollShow.questions track by question.order">
+                            <p>{{$index+1}}. {{question.name}}</p>
+                            <label ng-if="question.type=='close'" ng-repeat="answer in question.answers track by answer.ord"><input type="radio" name="{{question.name}}" value="{{answer.ord}}" ng-model="answerz.answer[question.order].val">{{answer.val}}  </label>
+                            <label ng-if="question.type=='open'" ng-repeat="answer in question.answers track by answer.ord"><input type="textarea" maxlength="{{answer.val}}" name="{{$index+1}}" ng-model="answerz.answer[question.order].val" ></label>
+                            <label ng-if="question.type=='scale'" ng-repeat="answer in question.answers track by answer.ord"><input type="range" min="1" max="{{answer.val}}" step="1" list="tickmarks" ng-model="answerz.answer[question.order].val">
+                            <datalist id="tickmarks">
+                                <option ng-if="answer.val>=3" value="1" label="1">1</option>
+                                <option ng-if="answer.val>=3" value="2" label="2">2</option>
+                                <option ng-if="answer.val>=3" value="3" label="3">3</option>
+                                <option ng-if="answer.val>=5" value="4" label="4">4</option>
+                                <option ng-if="answer.val>=5" value="5" label="5">5</option>
+                                <option ng-if="answer.val>=7" value="6" label="6">6</option>
+                                <option ng-if="answer.val>=7" value="7" label="7">7</option>
+                                <option ng-if="answer.val>=9" value="8" label="8">8</option>
+                                <option ng-if="answer.val>=9" value="9" label="9">9</option>
+                        </datalist></label>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" ng-disabled="dataLoading" class="btn btn-actiondefault" ><span class="glyphicon glyphicon-floppy-disk"></span> {{ 'Wyślij odpowiedzi' | translate }}</button>
+                            <img ng-if="dataLoading" ng-src="{{ config.route }}/core/modules/app/images/loading.gif" />
+                        </div>
+                    </form>
+                    <div ng-show="addAnswerMessage.error" class="alert alert-danger">{{addAnswerMessage.error | translate}}</div>
+                    <div ng-show="addAnswerMessage.success" class="alert alert-success">{{addAnswerMessage.success | translate}}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div ng-include="config.route + '/core/modules/app/views/footer.html'"></div>
+</div>

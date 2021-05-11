@@ -1,0 +1,74 @@
+<div class="row">
+    <div class="col-md-2 left-menu">
+        <div ng-include="config.route + '/core/modules/app/views/mainmenu.html'"></div>
+    </div>
+    <div class="col-md-10 mainboard">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <ol class="breadcrumb">
+                    <li><a ng-href="{{config.route}}/polls/myCreatedList">{{'Moja ankieta' | translate }}</a></li>
+                    <li class="active">{{pollCheck.name}}</li>
+                    <div class="pull-right">
+                        <nav>
+                            <ul class="nav nav-user">
+                                <li ng-if="currentUser.id" class="mainmenu">
+                                    <a ng-href="{{config.route}}/account">{{currentUser.name}} {{currentUser.surname}}</a>
+                                </li>
+                                <li ng-if="currentUser.id" class="mainmenu">
+                                    <a ng-click="logout()"><span class="glyphicon glyphicon-log-out"></span></a>
+                                </li>
+                                <li ng-if="!currentUser.id" class="mainmenu">
+                                    <a ng-href="{{config.route}}/login"><span class="glyphicon glyphicon-log-in"></span></a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div> 
+                </ol>                        
+            </div>
+            <div class="panel-body">
+                <div class="col-md-12">
+                    <ul class="nav nav-tabs">
+                        <li role="presentation" ng-class="{active:pollsTabOn=='start'}">
+                            <a ng-click="pollsTab('start')">
+                                <span class="glyphicon glyphicon-list-alt"></span> {{'Ankieta' | translate }}
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                 <div ng-if="checkConstOn" class="modal-box-small on-top" id="checkConstOn">
+                <div class="modal-box-header">
+                    {{ 'Klucz odpowiedzi' | translate }}
+                    <a ng-click="hideBox('checkConstOn')" class="pull-right"><span class="glyphicon glyphicon-remove"></span></a>
+                </div>
+                <div class="modal-box-content">
+                    <h3>{{'Podaj swój klucz odpowiedzi' | translate}}</h3>
+                    <input type="text" name="name" id="name" class="form-control" ng-model="check.chainCheck"/>
+                    <button ng-click="checkConst(pollCheck.answers,pollCheck.true,
+                    pollCheck.iduser,pollCheck.idpoll)" ng-click="showBox(checkConstOn)" class="btn btn-actionpiapp"><span class="glyphicon glyphicon-floppy-disk"></span> {{ 'Sprawdź!' | translate }}</button>
+                </div>
+            </div>
+                <a class="btn btn-default" ng-click="showBox('checkConstOn')"> 
+                        <span class="glyphicon glyphicon-user"></span>  
+                        {{ 'Sprawdź spójność!' | translate }}
+                    </a>
+                <div class="col-md-12" ng-if="pollsTabOn=='start'">
+                    <p ng-if="check.true!=0">
+                        <h3 ng-if="check.true==1">Dane spójne!</h3>
+                        <h3 ng-if="check.true==2">Dane zmienione!</h3>
+                    </p>
+                        <h3>{{pollCheck.name}}</h3>
+                        <div class="form-group" ng-repeat="question in pollCheck.questions track by question.order">
+                            <p>{{$index+1}}. {{question.name}}</p>
+                            <p ng-if="question.type=='open'">{{'(Pyt otwarte)' | translate}} {{pollCheck.answers.answer[$index].val}}</p>
+                            <p ng-if="question.type=='close'">{{'(Pyt zamknięte)' | translate}} {{question.answers[pollCheck.answers.answer[$index].val].val}}</p>
+                            <p ng-if="question.type=='scale'">{{'W skali od 1 do ' | translate}}{{question.answers[0].val}} : {{pollCheck.answers.answer[$index].val}}</p>
+                        </div>
+
+                            <!-- label ng-if="question.type=='close'" ng-repeat="answer in question.answers track by answer.ord"><input type="radio" name="{{question.name}}" value="{{answer.ord}}" ng-model="answerz.answer[question.order].val">{{answer.val}}  </label> -->
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div ng-include="config.route + '/core/modules/app/views/footer.html'"></div>
+</div>
