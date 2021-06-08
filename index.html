@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+	<html ng-app="wbsiapp">
+	    <head>
+	    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta http-equiv="Content-Language" content="pl">
+		<link rel="shortcut icon" type="image/png" href="http://147.135.208.199/Ankiety/favicon.png"/>
+		<meta name="keywords" content="intranet">
+    	<meta name="Description" content="intranet">
+    	
+		<link rel="stylesheet" href="http://147.135.208.199/Ankiety/core/plugins/2jquery-ui-1.10.4/jquery-ui.min.css" />
+    	<link rel="stylesheet" href="http://147.135.208.199/Ankiety/core/plugins/bootstrap-3.3.5-dist/css/bootstrap.min.css" />
+    	<link rel="stylesheet" href="http://147.135.208.199/Ankiety/core/plugins/fontawesome/all.css" />
+    	<script src="http://147.135.208.199/Ankiety/core/plugins/1jquery-1.11.3/jquery-1.11.3.min.js" ></script>
+    	<script src="http://147.135.208.199/Ankiety/core/plugins/2jquery-ui-1.10.4/jquery-ui-1.10.4.min.js" ></script>
+    	<script src="http://147.135.208.199/Ankiety/core/plugins/3angular-1.4.4/angular.min.js" ></script>
+    	<script src="http://147.135.208.199/Ankiety/core/plugins/3angular-1.4.4/angular-cookies.min.js" ></script>
+    	<script src="http://147.135.208.199/Ankiety/core/plugins/3angular-1.4.4/angular-route.min.js" ></script>
+    	<script src="http://147.135.208.199/Ankiety/core/plugins/angular-css/angular-css.min.js" ></script>
+    	<script src="http://147.135.208.199/Ankiety/core/plugins/angular-sanitize/angular-sanitize.min.js" ></script>
+    	<script src="http://147.135.208.199/Ankiety/core/plugins/angular-ui-tinymce/tinymce.js" ></script>
+    	<script src="http://147.135.208.199/Ankiety/core/plugins/bootstrap-3.3.5-dist/js/bootstrap.min.js" ></script>
+    	<script src="http://147.135.208.199/Ankiety/core/plugins/crypt/crypt-1.0.js" ></script>
+    	<script src="http://147.135.208.199/Ankiety/core/plugins/fontawesome/all.js" ></script>
+    	<script src="http://147.135.208.199/Ankiety/core/plugins/tinymce/tinymce.js" ></script>
+    	<script type="text/javascript">
+        var wbsiapp = angular.module('wbsiapp', ['ngRoute','ngCookies','ui.tinymce','angularCSS','ngSanitize']);
+	    </script>
+	    <script src="http://147.135.208.199/Ankiety/core/services/authentication/authentication.js" ></script>
+    	<script src="http://147.135.208.199/Ankiety/core/services/build/build.js" ></script>
+    	<script src="http://147.135.208.199/Ankiety/core/services/cud/cud.js" ></script>
+    	<script src="http://147.135.208.199/Ankiety/core/services/recursion/recursion.js" ></script>
+    	<script src="http://147.135.208.199/Ankiety/core/services/search/search.js" ></script>
+    	<script src="http://147.135.208.199/Ankiety/core/services/translate/translate.js" ></script>
+    	<script src="http://147.135.208.199/Ankiety/config-js.js" ></script>
+	    <script src="http://147.135.208.199/Ankiety/core/modules/app/app.js" ></script>
+	    <script src="http://147.135.208.199/Ankiety/core/directives/addFile/addFile.js" ></script>
+    	<script src="http://147.135.208.199/Ankiety/core/directives/addFile/fileUpload.js" ></script>
+    	<script src="http://147.135.208.199/Ankiety/core/directives/addcategory/addcategory.js" ></script>
+    	<script src="http://147.135.208.199/Ankiety/core/directives/calculator/calculator.js" ></script>
+    	<script src="http://147.135.208.199/Ankiety/core/directives/calendar/calendar.js" ></script>
+    	<script src="http://147.135.208.199/Ankiety/core/directives/categories/categories.js" ></script>
+    	<script src="http://147.135.208.199/Ankiety/core/directives/categorytree/categorytree.js" ></script>
+    	<script src="http://147.135.208.199/Ankiety/core/directives/color/color.js" ></script>
+    	<script src="http://147.135.208.199/Ankiety/core/directives/contact/contact.js" ></script>
+    	<script src="http://147.135.208.199/Ankiety/core/directives/contactadd/contactadd.js" ></script>
+    	<script src="http://147.135.208.199/Ankiety/core/directives/filesrepo/filesrepo.js" ></script>
+    	<script src="http://147.135.208.199/Ankiety/core/directives/getelementdata/getelementdata.js" ></script>
+    	<script src="http://147.135.208.199/Ankiety/core/directives/imagesList/imagesList.js" ></script>
+    	<script src="http://147.135.208.199/Ankiety/core/directives/multilanguage/multilanguage.js" ></script>
+    	<script src="http://147.135.208.199/Ankiety/core/directives/print/print.js" ></script>
+    	<script src="http://147.135.208.199/Ankiety/core/directives/searchengine/searchengine.js" ></script>
+    	<script src="http://147.135.208.199/Ankiety/core/directives/tabcheck/table.js" ></script>
+    	<script src="http://147.135.208.199/Ankiety/core/directives/tabfill/table.js" ></script>
+    	<script src="http://147.135.208.199/Ankiety/core/directives/table/table.js" ></script>
+    	<script src="http://147.135.208.199/Ankiety/core/directives/thumbnail/thumbnail.js" ></script>
+    	<script src="http://147.135.208.199/Ankiety/core/directives/workerstatus/workerstatus.js" ></script>
+    	<script src="http://147.135.208.199/Ankiety/core/modules/app/controllers/main.js" ></script>
+    	<script src="http://147.135.208.199/Ankiety/core/modules/polls/controllers/polls.js" ></script>
+    	<script src="http://147.135.208.199/Ankiety/core/modules/settings/controllers/settings.js" ></script>
+    	<script src="http://147.135.208.199/Ankiety/core/modules/users/controllers/users.js" ></script>
+    	<script src="http://147.135.208.199/Ankiety/core/modules/users/controllers/login.js" ></script>
+    	<script src="http://147.135.208.199/Ankiety/core/modules/users/controllers/account.js" ></script>
+    	<script src="http://147.135.208.199/Ankiety/core/modules/users/controllers/register.js" ></script>
+    	<script src="http://147.135.208.199/Ankiety/core/modules/votes/controllers/votes.js" ></script>
+    	<script src="http://147.135.208.199/Ankiety/core/language/language.js"></script>
+		<base href="http://147.135.208.199/Ankiety">
+	
+	    </head>
+		<body ng-controller="mainController" ng-view ></body>
+	</html>
