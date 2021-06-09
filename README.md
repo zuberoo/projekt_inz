@@ -1,4 +1,4 @@
-Author: Mateusz Szuflita
+Author: Mateusz Szuflita, Bartłomiej Baran
 Description:
 	The system was created for the subject of "Engineering project" and its purpose is to ensure anonymity while using the website.
 Requirements:
