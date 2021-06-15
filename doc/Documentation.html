@@ -1,0 +1,752 @@
+
+<h2 id="author">Author</h2>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>Mateusz Szuflita/Bartlomiej Baran</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<h2 id="description">Description</h2>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>The system was created for the subject of “Engineering project” and its purpose is to ensure anonymity while using the website.</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<h2 id="requirements">Requirements</h2>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>Must have:</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<ul>
+<li>apache2</li>
+<li>a2enmod rewrite</li>
+<li>apache config: Allow All</li>
+<li>mysql-server</li>
+<li>php7.0</li>
+<li>php7.0-dev</li>
+</ul>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+<h2 id="install">Install</h2>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>Install guide:</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<ul>
+<li>run in cmd $ sudo ./instal</li>
+<li>enter in browser http://127.0.0.1/empty/core/services/build/build.php</li>
+</ul>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+<h1 id="polls-controller">Polls Controller</h1>
+<p>This controller supports the polls module and deals with the data transfer between the backend and the frontend</p>
+<blockquote>
+<h2 id="function-showbox">Function showBox</h2>
+<blockquote>
+<p>Parameters: <strong>string</strong> el - string containing name of box to open.</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>Description: The function takes the name of the element to be shown on the page.</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>Return: None.</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<h2 id="function-hidebox">Function hideBox</h2>
+<blockquote>
+<p>Parameters: <strong>string</strong> el - string containing name of hide to open.</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>Description: The function takes the name of the element to be hidden on the page.</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>Return: None.</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<h2 id="function-initshow">Function initShow</h2>
+<blockquote>
+<p>Parameters: None.</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>Description: Function calls <em>getpoll</em> php if statement which return information about poll.</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>Return: <strong>array</strong> pollShow - information about poll</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<h2 id="function-calculatestats">Function calculateStats</h2>
+<blockquote>
+<p>Parameters: None.</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>Description: Function calls <em>calculateStats</em> php if statement which return information about specific poll answers statistic.</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>Return: <strong>array</strong> pollStat - information about specific poll answers statistic</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<h2 id="function-initcheck">Function initCheck</h2>
+<blockquote>
+<p>Parameters: None.</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>Description: Function calls <em>calculateStats</em> php if statement which return information about specific poll answers statistic.</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>Return: <strong>int</strong> checkPoll - information about specific poll answers for current user.</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<h2 id="function-initcheck-1">Function initCheck</h2>
+<blockquote>
+<p>Parameters: None.</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>Description: Function calls <em>calculateStats</em> php if statement which return information about specific poll answers statistic.</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>Return: <strong>int</strong> checkPoll - information about specific poll answers for current user.</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<h2 id="function-reload">Function reload</h2>
+<blockquote>
+<p>Parameters: None.</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>Description: Function reload page after accepting personal hash code.</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>Return: None.</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<h2 id="function-checkconst">Function checkConst</h2>
+<blockquote>
+<p>Parameters:</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<ul>
+<li><strong>array</strong> answers - array of answers given by user.</li>
+<li><strong>string</strong> trues - password needed for checking answer consistency.</li>
+<li><strong>int</strong> user - id of current user.</li>
+<li><strong>int</strong> poll - id of specific poll.</li>
+</ul>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>Description: Function check if answer was changed or not by administrator and calls <em>checkpoll</em> which return integer value</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>Return: <strong>int</strong> check.true - information about changes.</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<h2 id="function-initmycreatedpollslist">Function initMyCreatedPollsList</h2>
+<blockquote>
+<p>Parameters: None.</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>Description: Function calls <em>myCreatedPollsList</em> php if statement which return array of polls which was created by current user.</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>Return: <strong>array</strong> myCreatedPollsList- list of created polls.</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<h2 id="function-initmypollslist">Function initMyPollsList</h2>
+<blockquote>
+<p>Parameters: None.</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>Description: Function calls <em>myPollsList</em> php if statement which return array of polls which are availble to fill by current user.</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>Return: <strong>array</strong> myPollsList- list of availble polls.</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<h2 id="function-initfilledpollslist">Function initFilledPollsList</h2>
+<blockquote>
+<p>Parameters: None.</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>Description: Function calls <em>myFilledList</em> php if statement which return array of polls which were filled by current user.</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>Return: <strong>array</strong> myFilledList- list of filled polls.</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<h2 id="function-checkifkeyfill">Function checkIfKeyFill</h2>
+<blockquote>
+<p>Parameters: None.</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>Description: Function check if current user have access to specific poll if he tries to get into it by browser url.</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>Return: None.</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<h2 id="function-searchuser">Function searchUser</h2>
+<blockquote>
+<p>Parameters: None.</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>Description: Function calls <em>searchUsers</em> php if statement which return array of user which can be choose to be avaible to fill poll.</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>Return: <strong>array</strong> usersList- list of availble users.</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<h2 id="function-addnewquestion">Function addNewQuestion</h2>
+<blockquote>
+<p>Parameters: None.</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>Description: Function push new question to question array used to questions list.</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>Return: None.</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<h2 id="function-checkfill">Function checkFill</h2>
+<blockquote>
+<p>Parameters: None.</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>Description: Function calls <em>checkFill</em> php if statement which return information if current user have access to fill specific poll, on negative reload to polls list.</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>Return: None.</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<h2 id="function-checkcheck">Function checkCheck</h2>
+<blockquote>
+<p>Parameters: None.</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>Description: Function calls <em>checkFill</em> php if statement which return information if current user have access to fill specific poll, on negative reload to polls list</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>Return: None.</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<h2 id="function-checkstat">Function checkStat</h2>
+<blockquote>
+<p>Parameters: None.</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>Description: Function calls <em>checkStat</em> php if statement which return information if current user have access to check statistic for specific poll, on negative reload to filled list answers</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>Return: None.</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<h2 id="function-addnewpoll">Function addNewPoll</h2>
+<blockquote>
+<p>Parameters: <strong>array</strong> pollAdd - poll to add to database</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>Description: Function calls ‘addNewPoll’ php if statement which add new poll to database and return information if this add was succesfull or not.</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>Return: <strong>array</strong> response- information if poll was added or not</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<h2 id="function-addanswer">Function addAnswer</h2>
+<blockquote>
+<p>Parameters:</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<ul>
+<li><strong>array</strong> answerz - user answers.</li>
+<li><strong>int</strong> currentUser.id - user id.</li>
+<li><strong>array</strong> idpoll - poll id.</li>
+<li><strong>string</strong> truepass - user password</li>
+</ul>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>Description: Function calls ‘AddAnswer’ php if statement which add answer of current user for specific poll to database and return hashcode which user can enter to check if his answer was manipulated or not.</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>Return: <strong>string</strong> hashcode - user hashcode to check answer later.</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<h2 id="function-resendpolls">Function resendPolls</h2>
+<blockquote>
+<p>Parameters: <strong>array</strong> pollAdd - poll to add to database</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>Description: Function calls ‘resendPolls’ php if statement which send mail with information to specific users for specific poll.</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>Return: <strong>array</strong> response - information if information was send or not, # Votes Controller</p>
+</blockquote>
+</blockquote>
+<p>This controller supports the votes module and deals with the data transfer between the backend and the frontend</p>
+<blockquote>
+<h2 id="function-showbox-1">Function showBox</h2>
+<blockquote>
+<p>Parameters: <strong>string</strong> el - string containing name of box to open.</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>Description: The function takes the name of the element to be shown on the page.</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>Return: None.</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<h2 id="function-hidebox-1">Function hideBox</h2>
+<blockquote>
+<p>Parameters: <strong>string</strong> el - string containing name of hide to open.</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>Description: The function takes the name of the element to be hidden on the page.</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>Return: None.</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<h2 id="function-initshow-1">Function initShow</h2>
+<blockquote>
+<p>Parameters: None.</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>Description: Function calls <em>getvote</em> php if statement which return information about vote.</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>Return: <strong>array</strong> voteShow - information about vote</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<h2 id="function-calculatestats-1">Function calculateStats</h2>
+<blockquote>
+<p>Parameters: None.</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>Description: Function calls <em>calculateStats</em> php if statement which return information about specific vote answers statistic.</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>Return: <strong>array</strong> voteStat - information about specific vote answers statistic</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<h2 id="function-initcheck-2">Function initCheck</h2>
+<blockquote>
+<p>Parameters: None.</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>Description: Function calls <em>calculateStats</em> php if statement which return information about specific vote answers statistic.</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>Return: <strong>int</strong> checkVote - information about specific vote answers for current user.</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<h2 id="function-initcheck-3">Function initCheck</h2>
+<blockquote>
+<p>Parameters: None.</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>Description: Function calls <em>calculateStats</em> php if statement which return information about specific vote answers statistic.</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>Return: <strong>int</strong> checkVote - information about specific vote answers for current user.</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<h2 id="function-reload-1">Function reload</h2>
+<blockquote>
+<p>Parameters: None.</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>Description: Function reload page after accepting personal hash code.</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>Return: None.</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<h2 id="function-checkconst-1">Function checkConst</h2>
+<blockquote>
+<p>Parameters:</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<ul>
+<li><strong>array</strong> answers - array of answers given by user.</li>
+<li><strong>string</strong> trues - password needed for checking answer consistency.</li>
+<li><strong>int</strong> user - id of current user.</li>
+<li><strong>int</strong> vote - id of specific vote.</li>
+</ul>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>Description: Function check if answer was changed or not by administrator and calls <em>checkvote</em> which return integer value</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>Return: <strong>int</strong> check.true - information about changes.</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<h2 id="function-initmycreatedvoteslist">Function initMyCreatedVotesList</h2>
+<blockquote>
+<p>Parameters: None.</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>Description: Function calls <em>myCreatedVotesList</em> php if statement which return array of votes which was created by current user.</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>Return: <strong>array</strong> myCreatedVotesList- list of created votes.</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<h2 id="function-initmyvoteslist">Function initMyVotesList</h2>
+<blockquote>
+<p>Parameters: None.</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>Description: Function calls <em>myVotesList</em> php if statement which return array of votes which are availble to fill by current user.</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>Return: <strong>array</strong> myVotesList- list of availble votes.</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<h2 id="function-initfilledvoteslist">Function initFilledVotesList</h2>
+<blockquote>
+<p>Parameters: None.</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>Description: Function calls <em>myFilledList</em> php if statement which return array of votes which were filled by current user.</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>Return: <strong>array</strong> myFilledList- list of filled votes.</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<h2 id="function-checkifkeyfill-1">Function checkIfKeyFill</h2>
+<blockquote>
+<p>Parameters: None.</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>Description: Function check if current user have access to specific vote if he tries to get into it by browser url.</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>Return: None.</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<h2 id="function-searchuser-1">Function searchUser</h2>
+<blockquote>
+<p>Parameters: None.</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>Description: Function calls <em>searchUsers</em> php if statement which return array of user which can be choose to be avaible to fill vote.</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>Return: <strong>array</strong> usersList- list of availble users.</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<h2 id="function-addnewquestion-1">Function addNewQuestion</h2>
+<blockquote>
+<p>Parameters: None.</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>Description: Function push new question to question array used to questions list.</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>Return: None.</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<h2 id="function-checkfill-1">Function checkFill</h2>
+<blockquote>
+<p>Parameters: None.</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>Description: Function calls <em>checkFill</em> php if statement which return information if current user have access to fill specific vote, on negative reload to votes list.</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>Return: None.</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<h2 id="function-checkcheck-1">Function checkCheck</h2>
+<blockquote>
+<p>Parameters: None.</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>Description: Function calls <em>checkFill</em> php if statement which return information if current user have access to fill specific vote, on negative reload to votes list</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>Return: None.</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<h2 id="function-checkstat-1">Function checkStat</h2>
+<blockquote>
+<p>Parameters: None.</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>Description: Function calls <em>checkStat</em> php if statement which return information if current user have access to check statistic for specific vote, on negative reload to filled list answers</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>Return: None.</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<h2 id="function-addnewvote">Function addNewVote</h2>
+<blockquote>
+<p>Parameters: <strong>array</strong> voteAdd - vote to add to database</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>Description: Function calls ‘addNewVote’ php if statement which add new vote to database and return information if this add was succesfull or not.</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>Return: <strong>array</strong> response- information if vote was added or not</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<h2 id="function-addanswer-1">Function addAnswer</h2>
+<blockquote>
+<p>Parameters:</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<ul>
+<li><strong>array</strong> answerz - user answers.</li>
+<li><strong>int</strong> currentUser.id - user id.</li>
+<li><strong>array</strong> idvote - vote id.</li>
+<li><strong>string</strong> truepass - user password</li>
+</ul>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>Description: Function calls ‘AddAnswer’ php if statement which add answer of current user for specific vote to database and return hashcode which user can enter to check if his answer was manipulated or not.</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>Return: <strong>string</strong> hashcode - user hashcode to check answer later.</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<h2 id="function-resendvotes">Function resendVotes</h2>
+<blockquote>
+<p>Parameters: <strong>array</strong> voteAdd - vote to add to database</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>Description: Function calls ‘resendVotes’ php if statement which send mail with information to specific users for specific vote.</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>Return: <strong>array</strong> response - information if information was send or not,</p>
+</blockquote>
+</blockquote>
